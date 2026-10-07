@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Background Page Collector",
+  "version": "1.0.0",
+  "description": "Loads URLs in inactive tabs, extracts rendered page content, and sends results to a backend.",
+
+  "permissions": ["tabs", "scripting", "storage", "alarms"],
+
+  "host_permissions": ["https://*/*", "http://*/*"],
+
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -286,8 +286,18 @@ async function collectPage(url) {
           document.querySelector('meta[name="description"]')?.content ?? null;
 
         /*
-         * Full page result.
+         * Sainsbury's product pages use <main> as the product-content boundary.
+         * Other sites keep the existing full-body capture.
          */
+        const isSainsburys = /(^|\.)sainsburys\.co\.uk$/i.test(location.hostname);
+        const contentRoot = isSainsburys
+          ? document.querySelector("main")
+          : document.body;
+
+        if (isSainsburys && !contentRoot) {
+          throw new Error("Sainsbury's page did not contain a <main> element");
+        }
+
         return {
           url: location.href,
 
@@ -299,11 +309,8 @@ async function collectPage(url) {
 
           description,
 
-          text: document.body?.innerText ?? "",
-
-          // The backend only needs the rendered document body for AI extraction;
-          // do not send scripts, head metadata, or the complete document shell.
-          html: document.body?.outerHTML ?? "",
+          // Keep the <main> wrapper for Sainsbury's; use the full body elsewhere.
+          html: contentRoot?.outerHTML ?? "",
 
           pageHeight: Math.max(
             document.body?.scrollHeight || 0,

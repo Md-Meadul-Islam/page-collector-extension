@@ -1,6 +1,6 @@
 # Background Page Collector
 
-Chrome Manifest V3 extension that processes HTTPS URLs sequentially in inactive tabs, scrolls each rendered page, captures `document.body.innerText` and `document.documentElement.outerHTML`, saves results locally, and closes the tab.
+Chrome Manifest V3 extension that processes URLs sequentially in inactive tabs, scrolls each rendered page, captures the rendered HTML (`<main>` on `sainsburys.co.uk` and its subdomains; `<body>` on other sites), saves results locally, and closes the tab.
 
 ## Backend configuration
 
